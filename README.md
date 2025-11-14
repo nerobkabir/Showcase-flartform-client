@@ -1,16 +1,49 @@
-# React + Vite
+# 🎨 Artify – Creative Artwork Showcase Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Artify is a modern web platform where artists can upload and display their creative artworks, explore other artist galleries, filter artworks by category, and interact with the community. The platform focuses on elegant UI, smooth user experience, and powerful features for managing creative content.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔗 Live Site URL  
+👉 **Client:** https://your-artify-client.vercel.app  
+👉 **Server:** https://your-artify-server.vercel.app  
 
-## React Compiler
+(Replace with your real client and server URLs)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## ⭐ Key Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 🎨 **Artwork Upload System** – Users can upload artworks with title, image, category, and description.
+- 🔍 **Advanced Search & Filtering** – Search artworks by name and filter by categories.
+- 👤 **User Authentication** – Sign up / Login using email & Google Authentication.
+- ❤️ **Favorites System** – Users can save artworks to their favorite list.
+- 🔄 **Real-time Data Fetching** – Artworks & categories load dynamically from MongoDB server.
+- 📱 **Fully Responsive UI** – Clean, modern, mobile-friendly interface.
+- 🔒 **Private Routes** – Protect pages like upload, update, or user favorites.
+- 🚀 **Backend API** – Node.js + Express + MongoDB with proper CORS & JWT security.
+
+---
+
+## 🛠️ Technologies Used
+
+### **Frontend**
+- React.js  
+- React Router  
+- Tailwind CSS  
+- Swiper.js Slider  
+- Firebase Authentication  
+
+### **Backend**
+- Node.js  
+- Express.js  
+- MongoDB Atlas  
+- Vercel Serverless Deployment  
+
+---
+
+## 📦 Installation & Setup
+
+### 1️⃣ Clone the repository  
+```bash
+git clone https://github.com/your-repo/artify-client.git
