@@ -5,27 +5,25 @@ Artify is a modern web platform where artists can upload and display their creat
 ---
 
 ## 🔗 Live Site URL  
-👉 **Client:** https://your-artify-client.vercel.app  
-👉 **Server:** https://your-artify-server.vercel.app  
+**Client:** https://fluffy-pony-9edf2a.netlify.app
+**Server:** https://showcase-server.vercel.app/ 
 
-(Replace with your real client and server URLs)
 
----
 
-## ⭐ Key Features
+## Key Features
 
-- 🎨 **Artwork Upload System** – Users can upload artworks with title, image, category, and description.
-- 🔍 **Advanced Search & Filtering** – Search artworks by name and filter by categories.
-- 👤 **User Authentication** – Sign up / Login using email & Google Authentication.
-- ❤️ **Favorites System** – Users can save artworks to their favorite list.
-- 🔄 **Real-time Data Fetching** – Artworks & categories load dynamically from MongoDB server.
-- 📱 **Fully Responsive UI** – Clean, modern, mobile-friendly interface.
-- 🔒 **Private Routes** – Protect pages like upload, update, or user favorites.
-- 🚀 **Backend API** – Node.js + Express + MongoDB with proper CORS & JWT security.
+- **Artwork Upload System** – Users can upload artworks with title, image, category, and description.
+- **Advanced Search & Filtering** – Search artworks by name and filter by categories.
+- **User Authentication** – Sign up / Login using email & Google Authentication.
+- **Favorites System** – Users can save artworks to their favorite list.
+- **Real-time Data Fetching** – Artworks & categories load dynamically from MongoDB server.
+- **Fully Responsive UI** – Clean, modern, mobile-friendly interface.
+- **Private Routes** – Protect pages like upload, update, or user favorites.
+- **Backend API** – Node.js + Express + MongoDB with proper CORS & JWT security.
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 ### **Frontend**
 - React.js  
@@ -40,10 +38,4 @@ Artify is a modern web platform where artists can upload and display their creat
 - MongoDB Atlas  
 - Vercel Serverless Deployment  
 
----
 
-## 📦 Installation & Setup
-
-### 1️⃣ Clone the repository  
-```bash
-git clone https://github.com/your-repo/artify-client.git
