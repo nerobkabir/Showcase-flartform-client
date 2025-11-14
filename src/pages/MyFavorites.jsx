@@ -12,7 +12,7 @@ const MyFavorites = () => {
 
   useEffect(() => {
     if (!user?.email) return;
-    fetch(`http://localhost:3000/favorites?email=${user.email}`)
+    fetch(`https://showcase-server.vercel.app/favorites?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         setFavorites(data);
@@ -23,7 +23,7 @@ const MyFavorites = () => {
 
   const handleUnfavorite = (id) => {
     if (!window.confirm("Remove from favorites?")) return;
-    fetch(`http://localhost:3000/favorites/${id}`, { method: "DELETE" })
+    fetch(`https://showcase-server.vercel.app/favorites/${id}`, { method: "DELETE" })
       .then((res) => res.json())
       .then(() => {
         toast.success("Removed from favorites!");

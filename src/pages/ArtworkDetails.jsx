@@ -8,21 +8,22 @@ const ArtworkDetails = () => {
   const [artistInfo, setArtistInfo] = useState({ totalArtworks: 0 });
 
   useEffect(() => {
-    // Fetch artwork data
-    fetch(`http://localhost:3000/artworks/${id}`)
+    fetch(`https://showcase-server.vercel.app/artworks/${id}`)
       .then(res => res.json())
       .then(data => {
         setArtwork(data);
 
-        // Fetch artist total artworks
-        fetch(`http://localhost:3000/artist/${data.userEmail}/artworks`)
+        fetch(`https://showcase-server.vercel.app/artist/${data.userEmail}/artworks`)
           .then(res => res.json())
           .then(info => setArtistInfo(info));
       });
   }, [id]);
 
   const handleLike = () => {
-    fetch(`http://localhost:3000/artworks/${id}/like`, { method: "PATCH" })
+    fetch(`https://showcase-server.vercel.app/artworks/${id}/like`, 
+      { 
+        method: "PATCH" 
+      })
       .then(res => res.json())
       .then(() => {
         setArtwork(prev => ({ ...prev, likes: prev.likes + 1 }));
@@ -35,7 +36,7 @@ const ArtworkDetails = () => {
       artworkId: id,
     };
 
-    fetch(`http://localhost:3000/favorites`, {
+    fetch(`https://showcase-server.vercel.app/favorites`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(favorite),

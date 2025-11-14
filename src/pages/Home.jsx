@@ -16,7 +16,7 @@ const Home = () => {
 
   // ✅ Fetch latest 6 artworks (MongoDB sorted by createdAt desc)
   useEffect(() => {
-    fetch("http://localhost:3000/artworks?visibility=Public")
+    fetch("https://showcase-server.vercel.app/artworks?visibility=Public")
       .then((res) => res.json())
       .then((data) => {
         const sorted = data

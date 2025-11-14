@@ -1,16 +1,11 @@
 import { useState, useContext } from "react";
-import { Link } from "react-router-dom"; // Correct import
+import { Link } from "react-router-dom"; 
 import { AuthContext } from "../pages/AuthProvider";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [hoverUser, setHoverUser] = useState(false);
   const { user, logOut, signInWithGoogle } = useContext(AuthContext);
-
-  
-
-
-  
 
   const handleTheme = (checked) => {
     const html = document.querySelector("html");
@@ -40,6 +35,7 @@ const Navbar = () => {
         <div className="text-2xl font-bold text-yellow-400">
           <Link to="/">Artify</Link>
         </div>
+        
         <input
            onChange={(e) => handleTheme(e.target.checked)}
            type="checkbox"

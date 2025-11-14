@@ -12,7 +12,7 @@ const MyGallery = () => {
   // ✅ Fetch user's artworks
   useEffect(() => {
     if (!user?.email) return;
-    fetch(`http://localhost:3000/my-artworks?email=${user.email}`)
+    fetch(`https://showcase-server.vercel.app/my-artworks?email=${user.email}`)
       .then(res => res.json())
       .then(data => {
         setMyArtworks(data);
@@ -25,7 +25,7 @@ const MyGallery = () => {
   const handleDelete = (id) => {
     if (!window.confirm("Are you sure you want to delete this artwork?")) return;
 
-    fetch(`http://localhost:3000/artworks/${id}`, {
+    fetch(`https://showcase-server.vercel.app/artworks/${id}`, {
       method: "DELETE",
     })
       .then(res => res.json())
@@ -49,7 +49,7 @@ const MyGallery = () => {
       visibility: form.visibility.value,
     };
 
-    fetch(`http://localhost:3000/artworks/${selectedArt._id}`, {
+    fetch(`https://showcase-server.vercel.app/artworks/${selectedArt._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedArtwork),

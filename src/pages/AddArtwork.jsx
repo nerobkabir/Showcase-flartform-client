@@ -25,7 +25,7 @@ const AddArtwork = () => {
       createdAt: new Date().toISOString(),
     };
 
-    fetch("http://localhost:3000/add-artwork", {
+    fetch("https://showcase-server.vercel.app/add-artwork", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newArtwork),
@@ -60,7 +60,7 @@ const AddArtwork = () => {
             <option value="Private">Private</option>
           </select>
 
-          {/* User Info - Read Only */}
+          {/* User Info */}
           <input type="text" value={user?.displayName || ""} readOnly className="w-full p-2 border rounded-md bg-gray-100" />
           <input type="email" value={user?.email || ""} readOnly className="w-full p-2 border rounded-md bg-gray-100" />
 

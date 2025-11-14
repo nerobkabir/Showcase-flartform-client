@@ -6,24 +6,26 @@ const ExploreArtworks = () => {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(false); // ✅ Added loading state
+  const [loading, setLoading] = useState(false); 
 
   // ✅ Fetch artworks (filtered by search + category)
   useEffect(() => {
-    setLoading(true); // Start loading
-    let url = `http://localhost:3000/artworks?search=${search}`;
-    if (category) url += `&category=${category}`;
+    setLoading(true);
+    let url = `https://showcase-server.vercel.app/artworks?search=${search}`;
+    if (category) {
+      url += `&category=${category}`;
+    }
 
     fetch(url)
       .then((res) => res.json())
       .then((data) => setArtworks(data))
       .catch((err) => console.error("Error fetching artworks:", err))
-      .finally(() => setLoading(false)); // Stop loading
+      .finally(() => setLoading(false)); 
   }, [search, category]);
 
   // ✅ Fetch unique categories (once)
   useEffect(() => {
-    fetch("http://localhost:3000/artworks")
+    fetch("https://showcase-server.vercel.app/artworks")
       .then((res) => res.json())
       .then((data) => {
         const uniqueCategories = [...new Set(data.map((a) => a.category))];
@@ -39,9 +41,7 @@ const ExploreArtworks = () => {
           🎨 Explore Artworks
         </h1>
 
-        {/* ✅ Search and Filter Section */}
         <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-          {/* Search Bar */}
           <input
             type="text"
             placeholder="Search by title or artist..."
@@ -50,7 +50,6 @@ const ExploreArtworks = () => {
             className="w-full sm:w-1/2 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
           />
 
-          {/* ✅ Category Dropdown */}
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -65,7 +64,7 @@ const ExploreArtworks = () => {
           </select>
         </div>
 
-        {/* ✅ Loading Spinner */}
+    
         {loading ? (
           <div className="flex justify-center items-center py-20">
             <div className="w-12 h-12 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin"></div>
