@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
+import toast, { Toaster } from "react-hot-toast";
 import LoadingSpinner from "./LoadingSpinner";
+import { AuthContext } from "./AuthProvider";
 
 const ArtworkDetails = () => {
   const { id } = useParams();
+  const { user } = useContext(AuthContext);
   const [artwork, setArtwork] = useState(null);
   const [artistInfo, setArtistInfo] = useState({ totalArtworks: 0 });
 
@@ -16,40 +20,67 @@ const ArtworkDetails = () => {
         fetch(`https://showcase-server.vercel.app/artist/${data.userEmail}/artworks`)
           .then(res => res.json())
           .then(info => setArtistInfo(info));
-      });
+      })
+      .catch(() => toast.error("Failed to load artwork details."));
   }, [id]);
 
+  // ❤️ Like artwork
   const handleLike = () => {
-    fetch(`https://showcase-server.vercel.app/artworks/${id}/like`, 
-      { 
-        method: "PATCH" 
-      })
+    fetch(`https://showcase-server.vercel.app/artworks/${id}/like`, {
+      method: "PATCH"
+    })
       .then(res => res.json())
       .then(() => {
         setArtwork(prev => ({ ...prev, likes: prev.likes + 1 }));
-      });
+
+        Swal.fire({
+          title: "Liked! ❤️",
+          text: "You liked this artwork.",
+          icon: "success",
+          timer: 1200,
+          showConfirmButton: false
+        });
+      })
+      .catch(() => toast.error("Failed to like artwork"));
   };
 
+  // ❤️ Add to Favorites
   const handleAddToFavorites = () => {
+    if (!user) return toast.error("Please login to add favorites!");
+
     const favorite = {
-      userEmail: artwork.userEmail,
-      artworkId: id,
+      userEmail: user.email,
+      artworkId: id
     };
 
     fetch(`https://showcase-server.vercel.app/favorites`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(favorite),
+      body: JSON.stringify(favorite)
     })
       .then(res => res.json())
-      .then(() => alert("✅ Added to Favorites"));
+      .then((data) => {
+        if (data?.error) {
+          return toast.error("Already added to favorites!");
+        }
+
+        Swal.fire({
+          title: "Added! ❤️",
+          text: "Artwork added to favorites!",
+          icon: "success",
+          timer: 1300,
+          showConfirmButton: false
+        });
+      })
+      .catch(() => toast.error("Failed to add favorite"));
   };
 
   if (!artwork) return <LoadingSpinner />;
 
-
   return (
     <div className="max-w-3xl mx-auto my-10 bg-white shadow-lg rounded-lg p-6">
+      <Toaster />
+
       <img
         src={artwork.image}
         alt={artwork.title}

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import Swal from "sweetalert2";
 import { AuthContext } from "./AuthProvider";
 import LoadingSpinner from "./LoadingSpinner";
 
@@ -9,7 +10,7 @@ const MyGallery = () => {
   const [selectedArt, setSelectedArt] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Fetch user's artworks
+  // 🔶 Fetch user's artworks
   useEffect(() => {
     if (!user?.email) return;
     fetch(`https://showcase-server.vercel.app/my-artworks?email=${user.email}`)
@@ -21,22 +22,39 @@ const MyGallery = () => {
       .catch(() => setLoading(false));
   }, [user]);
 
-  // ✅ Delete artwork with confirmation
+  // 🔶 Delete artwork with SweetAlert
   const handleDelete = (id) => {
-    if (!window.confirm("Are you sure you want to delete this artwork?")) return;
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to undo this action!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#e74c3c",
+      cancelButtonColor: "#95a5a6",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`https://showcase-server.vercel.app/artworks/${id}`, {
+          method: "DELETE",
+        })
+          .then(res => res.json())
+          .then(() => {
+            setMyArtworks(myArtworks.filter(art => art._id !== id));
 
-    fetch(`https://showcase-server.vercel.app/artworks/${id}`, {
-      method: "DELETE",
-    })
-      .then(res => res.json())
-      .then(() => {
-        toast.success("Artwork deleted successfully!");
-        setMyArtworks(myArtworks.filter(art => art._id !== id));
-      })
-      .catch(() => toast.error("Failed to delete artwork"));
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your artwork has been removed.",
+              icon: "success",
+              timer: 1500,
+              showConfirmButton: false
+            });
+          })
+          .catch(() => toast.error("Failed to delete artwork"));
+      }
+    });
   };
 
-  // ✅ Update artwork
+  // 🔶 Update artwork (SweetAlert success)
   const handleUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -56,20 +74,27 @@ const MyGallery = () => {
     })
       .then(res => res.json())
       .then(() => {
-        toast.success("Artwork updated successfully!");
         setSelectedArt(null);
-        // Refresh list
+
+        // Update UI
         setMyArtworks(prev =>
           prev.map(art =>
             art._id === selectedArt._id ? { ...art, ...updatedArtwork } : art
           )
         );
+
+        Swal.fire({
+          title: "Updated!",
+          text: "Artwork has been updated successfully.",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false
+        });
       })
       .catch(() => toast.error("Failed to update artwork"));
   };
 
   if (loading) return <LoadingSpinner />;
-
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-6">
@@ -93,6 +118,7 @@ const MyGallery = () => {
                   alt={art.title}
                   className="w-full h-48 object-cover rounded-lg"
                 />
+
                 <h3 className="text-lg font-semibold mt-3">{art.title}</h3>
                 <p className="text-sm text-gray-600">
                   {art.category} • {art.medium}
@@ -124,11 +150,14 @@ const MyGallery = () => {
         )}
       </div>
 
-      {/* ✅ Update Modal */}
+      {/* 🔶 Update Modal */}
       {selectedArt && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-            <h2 className="text-xl font-bold mb-4 text-center">Update Artwork</h2>
+            <h2 className="text-xl font-bold mb-4 text-center">
+              Update Artwork
+            </h2>
+
             <form onSubmit={handleUpdate} className="space-y-3">
               <input
                 type="text"
@@ -137,6 +166,7 @@ const MyGallery = () => {
                 required
                 className="w-full border p-2 rounded-md"
               />
+
               <input
                 type="text"
                 name="category"
@@ -144,6 +174,7 @@ const MyGallery = () => {
                 required
                 className="w-full border p-2 rounded-md"
               />
+
               <input
                 type="text"
                 name="medium"
@@ -151,18 +182,21 @@ const MyGallery = () => {
                 required
                 className="w-full border p-2 rounded-md"
               />
+
               <input
                 type="number"
                 name="price"
                 defaultValue={selectedArt.price}
                 className="w-full border p-2 rounded-md"
               />
+
               <textarea
                 name="description"
                 defaultValue={selectedArt.description}
                 required
                 className="w-full border p-2 rounded-md"
               ></textarea>
+
               <select
                 name="visibility"
                 defaultValue={selectedArt.visibility}
@@ -180,6 +214,7 @@ const MyGallery = () => {
                 >
                   Cancel
                 </button>
+
                 <button
                   type="submit"
                   className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600"

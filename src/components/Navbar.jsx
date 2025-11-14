@@ -5,7 +5,7 @@ import { AuthContext } from "../pages/AuthProvider";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [hoverUser, setHoverUser] = useState(false);
-  const { user, logOut, signInWithGoogle } = useContext(AuthContext);
+  const { user, logOut} = useContext(AuthContext);
 
   const handleTheme = (checked) => {
     const html = document.querySelector("html");
@@ -17,11 +17,7 @@ const Navbar = () => {
   };
 
 
-  const handleGoogleLogin = () => {
-    signInWithGoogle()
-      .then(result => console.log("Logged in as:", result.user))
-      .catch(err => console.error(err));
-  };
+  
 
   const handleLogout = () => {
     logOut()
@@ -59,12 +55,14 @@ const Navbar = () => {
         <div className="hidden md:flex items-center space-x-4 relative">
           {!user ? (
             <>
-              <button
-                onClick={handleGoogleLogin}
+              <Link to="/login">
+                <button
+                
                 className="bg-yellow-500 hover:bg-yellow-600 px-3 py-1 rounded-md"
               >
                 Login
               </button>
+              </Link>
               <Link to="/register">
                 <button className="border border-yellow-400 px-3 py-1 rounded-md hover:bg-yellow-400 hover:text-black">
                   Register

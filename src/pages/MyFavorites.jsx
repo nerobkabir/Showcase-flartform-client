@@ -1,35 +1,58 @@
 import React, { useContext, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import Swal from "sweetalert2";
 import { AuthContext } from "./AuthProvider";
 import { Link } from "react-router-dom";
 import LoadingSpinner from "./LoadingSpinner";
-
 
 const MyFavorites = () => {
   const { user } = useContext(AuthContext);
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Load favorites
   useEffect(() => {
     if (!user?.email) return;
+
     fetch(`https://showcase-server.vercel.app/favorites?email=${user.email}`)
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
         setFavorites(data);
         setLoading(false);
       })
       .catch(() => setLoading(false));
   }, [user]);
 
+  // Remove from favorites with SweetAlert
   const handleUnfavorite = (id) => {
-    if (!window.confirm("Remove from favorites?")) return;
-    fetch(`https://showcase-server.vercel.app/favorites/${id}`, { method: "DELETE" })
-      .then((res) => res.json())
-      .then(() => {
-        toast.success("Removed from favorites!");
-        setFavorites(favorites.filter((fav) => fav._id !== id));
-      })
-      .catch(() => toast.error("Failed to remove favorite"));
+    Swal.fire({
+      title: "Remove from favorites?",
+      text: "This artwork will no longer be in your favorites list.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#e74c3c",
+      cancelButtonColor: "#95a5a6",
+      confirmButtonText: "Yes, remove"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`https://showcase-server.vercel.app/favorites/${id}`, {
+          method: "DELETE"
+        })
+          .then(res => res.json())
+          .then(() => {
+            setFavorites(favorites.filter(fav => fav._id !== id));
+
+            Swal.fire({
+              title: "Removed!",
+              text: "The artwork was removed from favorites.",
+              icon: "success",
+              timer: 1500,
+              showConfirmButton: false
+            });
+          })
+          .catch(() => toast.error("Failed to remove favorite"));
+      }
+    });
   };
 
   if (loading) return <LoadingSpinner />;
@@ -37,8 +60,11 @@ const MyFavorites = () => {
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-6">
       <Toaster />
+      
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">❤️ My Favorites</h1>
+        <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
+          ❤️ My Favorites
+        </h1>
 
         {favorites.length === 0 ? (
           <p className="text-center text-gray-500">No favorites yet. Go explore artworks!</p>
@@ -51,9 +77,12 @@ const MyFavorites = () => {
                   alt={fav.artwork.title}
                   className="w-full h-48 object-cover rounded-lg"
                 />
+
                 <h3 className="text-lg font-semibold mt-3">{fav.artwork.title}</h3>
                 <p className="text-sm text-gray-600">by {fav.artwork.userName || "Unknown Artist"}</p>
-                <p className="text-sm text-gray-500 mb-3">Category: {fav.artwork.category}</p>
+                <p className="text-sm text-gray-500 mb-3">
+                  Category: {fav.artwork.category}
+                </p>
 
                 <div className="flex gap-2">
                   <Link to={`/artwork/${fav.artwork._id}`} className="w-full">
@@ -61,6 +90,7 @@ const MyFavorites = () => {
                       View Details
                     </button>
                   </Link>
+
                   <button
                     onClick={() => handleUnfavorite(fav._id)}
                     className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
