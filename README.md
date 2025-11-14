@@ -1,10 +1,10 @@
-# 🎨 Artify – Creative Artwork Showcase Platform
+# Artify – Creative Artwork Showcase Platform
 
 Artify is a modern web platform where artists can upload and display their creative artworks, explore other artist galleries, filter artworks by category, and interact with the community. The platform focuses on elegant UI, smooth user experience, and powerful features for managing creative content.
 
 ---
 
-## 🔗 Live Site URL  
+## Live Site URL  
 **Client:** https://fluffy-pony-9edf2a.netlify.app
 **Server:** https://showcase-server.vercel.app/ 
 
