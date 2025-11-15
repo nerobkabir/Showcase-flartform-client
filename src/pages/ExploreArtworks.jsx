@@ -8,7 +8,7 @@ const ExploreArtworks = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false); 
 
-  // ✅ Fetch artworks (filtered by search + category)
+  
   useEffect(() => {
     setLoading(true);
     let url = `https://showcase-server.vercel.app/artworks?search=${search}`;
@@ -23,7 +23,7 @@ const ExploreArtworks = () => {
       .finally(() => setLoading(false)); 
   }, [search, category]);
 
-  // ✅ Fetch unique categories (once)
+  // Fetch unique categories
   useEffect(() => {
     fetch("https://showcase-server.vercel.app/artworks")
       .then((res) => res.json())

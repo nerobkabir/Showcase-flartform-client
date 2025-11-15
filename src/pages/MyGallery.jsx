@@ -10,7 +10,7 @@ const MyGallery = () => {
   const [selectedArt, setSelectedArt] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // 🔶 Fetch user's artworks
+
   useEffect(() => {
     if (!user?.email) return;
     fetch(`https://showcase-server.vercel.app/my-artworks?email=${user.email}`)
@@ -22,7 +22,7 @@ const MyGallery = () => {
       .catch(() => setLoading(false));
   }, [user]);
 
-  // 🔶 Delete artwork with SweetAlert
+  
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -54,7 +54,7 @@ const MyGallery = () => {
     });
   };
 
-  // 🔶 Update artwork (SweetAlert success)
+  
   const handleUpdate = (e) => {
     e.preventDefault();
     const form = e.target;

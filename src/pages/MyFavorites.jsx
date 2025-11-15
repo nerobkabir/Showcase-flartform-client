@@ -10,7 +10,6 @@ const MyFavorites = () => {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Load favorites
   useEffect(() => {
     if (!user?.email) return;
 
@@ -23,7 +22,7 @@ const MyFavorites = () => {
       .catch(() => setLoading(false));
   }, [user]);
 
-  // Remove from favorites with SweetAlert
+  
   const handleUnfavorite = (id) => {
     Swal.fire({
       title: "Remove from favorites?",

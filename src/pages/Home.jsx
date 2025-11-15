@@ -14,31 +14,30 @@ const Home = () => {
   const [communityHighlights, setCommunityHighlights] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Fetch latest 6 artworks (MongoDB sorted by createdAt desc)
   useEffect(() => {
     fetch("https://showcase-server.vercel.app/artworks?visibility=Public")
       .then((res) => res.json())
       .then((data) => {
         const sorted = data
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-          .slice(0, 6); // latest 6 artworks
+          .slice(0, 6); 
         setFeaturedArtworks(sorted);
         setLoading(false);
       })
       .catch(() => setLoading(false));
   }, []);
 
-  // ✅ Top Artists Section (static sample data)
+
   useEffect(() => {
     setTopArtists([
-      { name: "Alice Johnson", artworks: 12 },
-      { name: "Bob Smith", artworks: 8 },
-      { name: "Clara Lee", artworks: 10 },
-      { name: "David Kim", artworks: 6 },
+      { name: "Kabir Hossain", artworks: 12 },
+      { name: "Shaheen Ahamed", artworks: 8 },
+      { name: "Abdullah Omor", artworks: 10 },
+      { name: "Shakib", artworks: 6 },
     ]);
   }, []);
 
-  // ✅ Community Highlights Section (static sample data)
+  
   useEffect(() => {
     setCommunityHighlights([
       {
@@ -56,7 +55,6 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* 🖼️ Banner/Slider */}
       <Swiper
         modules={[Autoplay, Pagination, Navigation]}
         spaceBetween={30}
@@ -90,7 +88,6 @@ const Home = () => {
         ))}
       </Swiper>
 
-      {/* 🎨 Featured Artworks Section */}
       <div className="max-w-7xl mx-auto py-12 px-6">
         <h2 className="text-3xl font-bold mb-6 text-gray-800">
           🎨 Featured Artworks
@@ -129,7 +126,7 @@ const Home = () => {
         )}
       </div>
 
-      {/* 🏆 Top Artists of the Week */}
+  
       <div className="bg-gray-200 py-12 px-6">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold mb-6 text-gray-800">
@@ -152,7 +149,7 @@ const Home = () => {
         </div>
       </div>
 
-      {/* 🌟 Community Highlights */}
+  
       <div className="max-w-7xl mx-auto py-12 px-6">
         <h2 className="text-3xl font-bold mb-6 text-gray-800">
           🌟 Community Highlights
