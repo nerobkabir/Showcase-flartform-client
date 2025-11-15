@@ -23,7 +23,7 @@ const ExploreArtworks = () => {
       .finally(() => setLoading(false)); 
   }, [search, category]);
 
-  // Fetch unique categories
+  
   useEffect(() => {
     fetch("https://showcase-server.vercel.app/artworks")
       .then((res) => res.json())
