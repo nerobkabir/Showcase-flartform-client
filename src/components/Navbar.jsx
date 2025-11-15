@@ -6,17 +6,6 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [hoverUser, setHoverUser] = useState(false);
   const { user, logOut} = useContext(AuthContext);
-
-  const handleTheme = (checked) => {
-    const html = document.querySelector("html");
-    if (checked) {
-      html.setAttribute("data-theme", "dark");
-    } else {
-      html.setAttribute("data-theme", "light");
-    }
-  };
-
-
   
 
   const handleLogout = () => {
