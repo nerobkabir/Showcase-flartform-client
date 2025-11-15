@@ -24,7 +24,6 @@ const ArtworkDetails = () => {
       .catch(() => toast.error("Failed to load artwork details."));
   }, [id]);
 
-  // ❤️ Like artwork
   const handleLike = () => {
     fetch(`https://showcase-server.vercel.app/artworks/${id}/like`, {
       method: "PATCH"
@@ -44,7 +43,6 @@ const ArtworkDetails = () => {
       .catch(() => toast.error("Failed to like artwork"));
   };
 
-  // ❤️ Add to Favorites
   const handleAddToFavorites = () => {
     if (!user) return toast.error("Please login to add favorites!");
 
