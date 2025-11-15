@@ -5,7 +5,7 @@ Artify is a modern web platform where artists can upload and display their creat
 ---
 
 ## Live Site URL  
-**Client:** https://fluffy-pony-9edf2a.netlify.app
+**Client:** https://chimerical-crisp-783324.netlify.app
 **Server:** https://showcase-server.vercel.app/ 
 
 
