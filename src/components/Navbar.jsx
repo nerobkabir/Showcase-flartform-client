@@ -1,12 +1,12 @@
 import { useState, useContext } from "react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import { AuthContext } from "../pages/AuthProvider";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [hoverUser, setHoverUser] = useState(false);
-  const { user, logOut} = useContext(AuthContext);
-  
+  const { user, logOut } = useContext(AuthContext);
+
 
   const handleLogout = () => {
     logOut()
@@ -14,7 +14,7 @@ const Navbar = () => {
       .catch(err => console.error(err));
   };
 
-  
+
 
   return (
     <nav className="bg-gray-900 text-white shadow-md">
@@ -22,13 +22,13 @@ const Navbar = () => {
         <div className="text-2xl font-bold text-yellow-400">
           <Link to="/">Artify</Link>
         </div>
-        
+
 
 
         <div className="hidden md:flex space-x-6">
           <Link to="/" className="hover:text-yellow-400">Home</Link>
           <Link to="/explore" className="hover:text-yellow-400">Explore Artworks</Link>
-          
+
           {user && (
             <>
               <Link to="/add" className="hover:text-yellow-400">Add Artwork</Link>
@@ -43,11 +43,11 @@ const Navbar = () => {
             <>
               <Link to="/login">
                 <button
-                
-                className="bg-yellow-500 hover:bg-yellow-600 px-3 py-1 rounded-md"
-              >
-                Login
-              </button>
+
+                  className="bg-yellow-500 hover:bg-yellow-600 px-3 py-1 rounded-md"
+                >
+                  Login
+                </button>
               </Link>
               <Link to="/register">
                 <button className="border border-yellow-400 px-3 py-1 rounded-md hover:bg-yellow-400 hover:text-black">
@@ -106,14 +106,25 @@ const Navbar = () => {
             </>
           )}
           {!user ? (
-            <Link to="/login" onClick={() => setMenuOpen(false)}>
-            <button
-              
-              className="bg-yellow-500 hover:bg-yellow-600 px-3 py-1 rounded-md"
-            >
-              Login
-            </button>
-            </Link>
+            <>
+              <Link to="/login" onClick={() => setMenuOpen(false)}>
+                <button
+
+                  className="bg-yellow-500 hover:bg-yellow-600 px-3 py-1 rounded-md"
+                >
+                  Login
+                </button>
+              </Link>
+
+              <Link to="/register" onClick={() => setMenuOpen(false)}>
+                <button
+
+                  className="bg-yellow-500 hover:bg-yellow-600 px-3 py-1 rounded-md"
+                >
+                  Register
+                </button>
+              </Link>
+            </>
           ) : (
             <button
               onClick={handleLogout}
@@ -122,7 +133,7 @@ const Navbar = () => {
               Logout
             </button>
           )}
-        
+
         </div>
       )}
     </nav>
