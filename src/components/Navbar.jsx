@@ -21,11 +21,6 @@ const Navbar = () => {
           <Link to="/">Artify</Link>
         </div>
         
-        <input
-           onChange={(e) => handleTheme(e.target.checked)}
-           type="checkbox"
-           defaultChecked={localStorage.getItem('theme') === "dark"}
-           className="toggle"/>
 
 
         <div className="hidden md:flex space-x-6">
