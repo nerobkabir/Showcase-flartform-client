@@ -22,7 +22,7 @@ const MyGallery = () => {
       .catch(() => setLoading(false));
   }, [user]);
 
-  
+
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -54,7 +54,7 @@ const MyGallery = () => {
     });
   };
 
-  
+
   const handleUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -77,11 +77,15 @@ const MyGallery = () => {
         setSelectedArt(null);
 
         // Update UI
-        setMyArtworks(prev =>
-          prev.map(art =>
-            art._id === selectedArt._id ? { ...art, ...updatedArtwork } : art
-          )
-        );
+        setMyArtworks(prev => {
+          return prev.map(art => {
+            if (art._id === selectedArt._id) {
+              return { ...art, ...updatedArtwork };
+            }
+            return art;
+          });
+        });
+
 
         Swal.fire({
           title: "Updated!",
@@ -150,7 +154,7 @@ const MyGallery = () => {
         )}
       </div>
 
-      {/* 🔶 Update Modal */}
+      {/* Update Modal */}
       {selectedArt && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
