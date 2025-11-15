@@ -14,6 +14,8 @@ const Navbar = () => {
       .catch(err => console.error(err));
   };
 
+  
+
   return (
     <nav className="bg-gray-900 text-white shadow-md">
       <div className="flex justify-between items-center px-6 py-4">
@@ -104,12 +106,14 @@ const Navbar = () => {
             </>
           )}
           {!user ? (
+            <Link to="/login" onClick={() => setMenuOpen(false)}>
             <button
-              onClick={handleGoogleLogin}
+              
               className="bg-yellow-500 hover:bg-yellow-600 px-3 py-1 rounded-md"
             >
               Login
             </button>
+            </Link>
           ) : (
             <button
               onClick={handleLogout}
