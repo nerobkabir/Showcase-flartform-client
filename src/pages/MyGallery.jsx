@@ -76,7 +76,6 @@ const MyGallery = () => {
       .then(() => {
         setSelectedArt(null);
 
-        // Update UI
         setMyArtworks(prev => {
           return prev.map(art => {
             if (art._id === selectedArt._id) {

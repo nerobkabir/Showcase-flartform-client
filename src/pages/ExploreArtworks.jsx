@@ -28,8 +28,10 @@ const ExploreArtworks = () => {
     fetch("https://showcase-server.vercel.app/artworks")
       .then((res) => res.json())
       .then((data) => {
-        const uniqueCategories = [...new Set(data.map((a) => a.category))];
-        setCategories(uniqueCategories);
+        const categories = data.map(a => a.category);
+        const unique = [...new Set(categories)];
+
+        setCategories(unique);
       })
       .catch((err) => console.error("Error fetching categories:", err));
   }, []);
