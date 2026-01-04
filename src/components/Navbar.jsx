@@ -10,7 +10,6 @@ const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const location = useLocation();
 
-  // Initialize dark mode from localStorage
   useEffect(() => {
     const savedMode = localStorage.getItem('darkMode') === 'true';
     setDarkMode(savedMode);
@@ -31,7 +30,6 @@ const Navbar = () => {
     }
   };
 
-  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -40,7 +38,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close menus on route change
   useEffect(() => {
     setMenuOpen(false);
     setProfileOpen(false);
@@ -73,7 +70,6 @@ const Navbar = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            {/* Logo with Animation */}
             <Link to="/" className="flex items-center space-x-3 group">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-lg blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
@@ -93,7 +89,6 @@ const Navbar = () => {
               </div>
             </Link>
 
-            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-2 bg-gray-800/50 dark:bg-gray-900/70 backdrop-blur-sm px-3 py-2 rounded-full border border-gray-700/50 dark:border-gray-600/50">
               <Link to="/" className={navLinkClass("/")}>
                 Home
@@ -117,9 +112,7 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Desktop Auth Section */}
             <div className="hidden md:flex items-center space-x-3">
-              {/* Dark Mode Toggle */}
               <button
                 onClick={toggleDarkMode}
                 className="p-2.5 rounded-full bg-gray-800/50 dark:bg-gray-700/50 hover:bg-gray-700 dark:hover:bg-gray-600 transition-all border border-gray-700/50 dark:border-gray-600/50"
@@ -178,12 +171,10 @@ const Navbar = () => {
                     </svg>
                   </button>
 
-                  {/* Enhanced Dropdown Menu */}
                   {profileOpen && (
                     <>
                       <div className="fixed inset-0 z-10" onClick={() => setProfileOpen(false)} />
                       <div className="absolute right-0 mt-3 w-64 bg-gradient-to-br from-gray-800 via-gray-900 to-black dark:from-gray-900 dark:via-gray-950 dark:to-black rounded-2xl shadow-2xl border-2 border-gray-700/50 dark:border-gray-600/50 py-2 z-20 overflow-hidden">
-                        {/* Header with Gradient */}
                         <div className="relative px-4 py-4 bg-gradient-to-r from-yellow-400/10 to-yellow-600/10 border-b border-gray-700/50 dark:border-gray-600/50">
                           <div className="flex items-center space-x-3">
                             <div className="relative">
@@ -203,7 +194,6 @@ const Navbar = () => {
                           </div>
                         </div>
 
-                        {/* Menu Items */}
                         <div className="py-2">
                           <Link
                             to="/dashboard"
@@ -258,7 +248,6 @@ const Navbar = () => {
                           </Link>
                         </div>
 
-                        {/* Logout Button */}
                         <div className="border-t border-gray-700/50 dark:border-gray-600/50 mt-2 pt-2">
                           <button
                             onClick={handleLogout}
@@ -281,7 +270,6 @@ const Navbar = () => {
 
             {/* Mobile Menu Button */}
             <div className="md:hidden flex items-center space-x-2">
-              {/* Mobile Dark Mode Toggle */}
               <button
                 onClick={toggleDarkMode}
                 className="p-2 rounded-lg bg-gray-800/50 dark:bg-gray-700/50 hover:bg-gray-700 dark:hover:bg-gray-600 transition-all"
@@ -313,7 +301,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Enhanced Mobile Menu */}
         <div className={`md:hidden overflow-hidden transition-all duration-500 ${menuOpen ? "max-h-[600px]" : "max-h-0"}`}>
           <div className="px-4 py-6 bg-gradient-to-b from-gray-800/98 to-gray-900/98 dark:from-gray-900/98 dark:to-gray-950/98 backdrop-blur-xl border-t border-gray-700/50 dark:border-gray-600/50 space-y-3">
             {user && (
@@ -429,7 +416,6 @@ const Navbar = () => {
         </div>
       </nav>
       
-      {/* Spacer to push content below fixed navbar */}
       <div className="h-20"></div>
     </>
   );

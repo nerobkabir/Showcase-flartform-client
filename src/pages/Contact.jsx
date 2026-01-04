@@ -5,7 +5,6 @@ const Contact = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 py-16 px-4">
       <div className="max-w-6xl mx-auto">
 
-        {/* Header */}
         <div className="text-center mb-14">
           <h1 className="text-5xl font-extrabold text-gray-800">
             Contact <span className="text-yellow-500">Artify</span>
@@ -16,9 +15,7 @@ const Contact = () => {
           </p>
         </div>
 
-        {/* Content */}
         <div className="grid md:grid-cols-2 gap-12">
-          {/* Info */}
           <div className="bg-white rounded-3xl shadow-xl p-10">
             <h3 className="text-2xl font-bold text-gray-800 mb-6">
               Get in Touch
@@ -33,7 +30,6 @@ const Contact = () => {
             </p>
           </div>
 
-          {/* Form */}
           <form className="bg-white rounded-3xl shadow-xl p-10 space-y-5">
             <h3 className="text-2xl font-bold text-gray-800 mb-2">
               Send a Message

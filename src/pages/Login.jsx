@@ -46,7 +46,6 @@ const Login = () => {
       .catch(() => toast.error("Google login failed"));
   };
 
-  // Demo user auto-fill
   const fillDemoCredentials = () => {
     document.querySelector('input[name="email"]').value = "demo@artify.com";
     document.querySelector('input[name="password"]').value = "Demo@123";

@@ -31,9 +31,7 @@ const DashboardLayout = () => {
 
   return (
     <div className="flex h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200">
-      {/* Sidebar */}
       <aside className={`${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 fixed md:static inset-y-0 left-0 z-50 w-72 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white transition-transform duration-300 ease-in-out shadow-2xl`}>
-        {/* Logo Section */}
         <div className="relative p-6 border-b border-gray-700/50">
           <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/10 to-yellow-600/10"></div>
           <Link to="/" className="relative flex items-center gap-3 group">
@@ -57,7 +55,6 @@ const DashboardLayout = () => {
           </button>
         </div>
 
-        {/* User Profile Card */}
         <div className="p-4 mx-4 mt-4 bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-xl border border-gray-700/50 shadow-lg">
           <div className="flex items-center gap-3">
             <div className="relative">
@@ -78,7 +75,6 @@ const DashboardLayout = () => {
           </div>
         </div>
 
-        {/* Navigation Menu */}
         <nav className="p-4 space-y-1 mt-2">
           {menuItems.map((item, index) => (
             <Link
@@ -101,7 +97,6 @@ const DashboardLayout = () => {
           ))}
         </nav>
 
-        {/* Bottom Section */}
         <div className="absolute bottom-0 w-full p-4 border-t border-gray-700/50 bg-gradient-to-t from-gray-900 to-transparent">
           <Link
             to="/dashboard/profile"
@@ -128,9 +123,7 @@ const DashboardLayout = () => {
         </div>
       </aside>
 
-      {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Top Navbar */}
         <header className="bg-white/80 backdrop-blur-xl shadow-lg border-b border-gray-200 z-10">
           <div className="flex items-center justify-between px-6 py-4">
             <div className="flex items-center gap-4">
@@ -152,7 +145,6 @@ const DashboardLayout = () => {
               </div>
             </div>
 
-            {/* Profile Dropdown */}
             <div className="relative">
               <button
                 onClick={() => setProfileDropdown(!profileDropdown)}
@@ -181,7 +173,6 @@ const DashboardLayout = () => {
                 <>
                   <div className="fixed inset-0 z-10" onClick={() => setProfileDropdown(false)} />
                   <div className="absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-2xl border border-gray-200 py-2 z-20 overflow-hidden">
-                    {/* Header */}
                     <div className="px-4 py-3 bg-gradient-to-r from-yellow-400/10 to-yellow-600/10 border-b border-gray-100">
                       <div className="flex items-center gap-3">
                         <img
@@ -198,7 +189,6 @@ const DashboardLayout = () => {
                       </div>
                     </div>
 
-                    {/* Menu Items */}
                     <div className="py-2">
                       <Link
                         to="/dashboard/profile"
@@ -218,7 +208,6 @@ const DashboardLayout = () => {
                       </Link>
                     </div>
 
-                    {/* Logout */}
                     <div className="border-t border-gray-100 pt-2">
                       <button
                         onClick={handleLogout}
@@ -235,7 +224,6 @@ const DashboardLayout = () => {
           </div>
         </header>
 
-        {/* Page Content */}
         <main className="flex-1 overflow-y-auto p-6 bg-gradient-to-br from-gray-50 to-gray-100">
           <div className="max-w-7xl mx-auto">
             <Outlet />
@@ -243,7 +231,6 @@ const DashboardLayout = () => {
         </main>
       </div>
 
-      {/* Overlay for mobile sidebar */}
       {sidebarOpen && (
         <div
           onClick={() => setSidebarOpen(false)}

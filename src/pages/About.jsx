@@ -5,7 +5,6 @@ const About = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 py-16 px-4">
       <div className="max-w-6xl mx-auto">
 
-        {/* Header */}
         <div className="text-center mb-14">
           <h1 className="text-5xl font-extrabold text-gray-800">
             About <span className="text-yellow-500">Artify</span>
@@ -16,7 +15,6 @@ const About = () => {
           </p>
         </div>
 
-        {/* Cards */}
         <div className="grid md:grid-cols-3 gap-8">
           <InfoCard
             title="Our Mission"
@@ -35,7 +33,6 @@ const About = () => {
           />
         </div>
 
-        {/* Tech Stack */}
         <div className="mt-20 bg-white rounded-3xl shadow-xl p-10">
           <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
             Technology Stack

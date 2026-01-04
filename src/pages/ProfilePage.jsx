@@ -22,7 +22,6 @@ const ProfilePage = () => {
   useEffect(() => {
     if (!user?.email) return;
 
-    // Load user profile from backend
     fetch(`https://showcase-server.vercel.app/users/${user.email}`)
       .then(res => res.json())
       .then(data => {
@@ -49,13 +48,11 @@ const ProfilePage = () => {
     setLoading(true);
 
     try {
-      // Update Firebase Auth profile (name & photo)
       await updateProfile(auth.currentUser, {
         displayName: formData.displayName,
         photoURL: formData.photoURL,
       });
 
-      // Update MongoDB user profile (bio, phone, location)
       await fetch(`https://showcase-server.vercel.app/users/${user.email}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -72,7 +69,6 @@ const ProfilePage = () => {
       toast.success("Profile updated successfully!");
       setEditing(false);
       
-      // Reload page to reflect changes
       setTimeout(() => window.location.reload(), 1000);
     } catch (error) {
       toast.error("Failed to update profile");
@@ -86,11 +82,9 @@ const ProfilePage = () => {
       <Toaster />
       
       <div className="bg-white rounded-xl shadow-md overflow-hidden">
-        {/* Header Banner */}
         <div className="h-32 bg-gradient-to-r from-blue-500 to-purple-600"></div>
 
         <div className="relative px-6 pb-6">
-          {/* Profile Picture */}
           <div className="flex justify-between items-start -mt-16">
             <img
               src={formData.photoURL || "https://via.placeholder.com/150"}
@@ -115,7 +109,6 @@ const ProfilePage = () => {
             )}
           </div>
 
-          {/* Profile Info */}
           {!editing ? (
             <div className="mt-6 space-y-6">
               <div>
@@ -152,7 +145,6 @@ const ProfilePage = () => {
               </div>
             </div>
           ) : (
-            // Edit Form
             <form onSubmit={handleSubmit} className="mt-6 space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>

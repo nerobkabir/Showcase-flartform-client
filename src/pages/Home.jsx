@@ -21,15 +21,14 @@ const Home = () => {
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           .slice(0, 6);
         setFeaturedArtworks(sorted);
-        
-        // Calculate stats
+
         setStats({
           artworks: data.length,
           artists: new Set(data.map(a => a.userEmail)).size,
           categories: new Set(data.map(a => a.category)).size,
           likes: data.reduce((sum, art) => sum + (art.likes || 0), 0)
         });
-        
+
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -76,7 +75,6 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Hero Carousel Section */}
       <section className="relative h-[70vh] overflow-hidden">
         <Swiper
           modules={[Autoplay, Pagination, Navigation, EffectFade]}
@@ -91,7 +89,7 @@ const Home = () => {
           {featuredArtworks.slice(0, 3).map((art, idx) => (
             <SwiperSlide key={art._id}>
               <div className="relative w-full h-full">
-                <div 
+                <div
                   className="absolute inset-0 bg-cover bg-center transform scale-110 animate-ken-burns"
                   style={{ backgroundImage: `url(${art.image})` }}
                 />
@@ -122,8 +120,7 @@ const Home = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-        
-        {/* Scroll Indicator */}
+
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
           <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
             <div className="w-1 h-3 bg-white rounded-full mt-2 animate-scroll-down"></div>
@@ -131,7 +128,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Welcome Section */}
       <section className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800 animate-fade-in">
@@ -155,7 +151,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Statistics Section */}
       <section className="py-16 px-6 bg-gradient-to-r from-yellow-400 to-orange-500">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
@@ -179,7 +174,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Features Section */}
       <section className="py-20 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold mb-4 text-center text-gray-800">
@@ -190,7 +184,7 @@ const Home = () => {
           </p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, idx) => (
-              <div 
+              <div
                 key={idx}
                 className="bg-white p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all transform hover:-translate-y-2 group"
                 style={{ animationDelay: `${idx * 100}ms` }}
@@ -206,102 +200,94 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Featured Artworks Section */}
-<section className="py-24 px-6 bg-white">
-  <div className="max-w-7xl mx-auto">
-    
-    {/* Section Header */}
-    <div className="text-center mb-16">
-      <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-        Featured Artworks
-      </h2>
-      <div className="w-24 h-1 bg-yellow-500 mx-auto mb-4 rounded-full"></div>
-      <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-        Handpicked artworks from our most talented creators around the world
-      </p>
-    </div>
+      <section className="py-24 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
 
-    {featuredArtworks.length === 0 ? (
-      <p className="text-center text-gray-500 py-12">
-        No featured artworks available at the moment.
-      </p>
-    ) : (
-      <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-        {featuredArtworks.map((art) => (
-          <div
-            key={art._id}
-            className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500"
-          >
-            {/* Image */}
-            <div className="relative h-72 overflow-hidden">
-              <img
-                src={art.image}
-                alt={art.title}
-                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-              />
-
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-500 flex items-end">
-                <div className="p-6 text-white opacity-0 group-hover:opacity-100 translate-y-6 group-hover:translate-y-0 transition-all duration-500">
-                  <h3 className="text-xl font-bold mb-1">
-                    {art.title}
-                  </h3>
-                  <p className="text-sm opacity-90 mb-4">
-                    by {art.userName || "Unknown Artist"}
-                  </p>
-
-                  <Link to={`/artwork/${art._id}`}>
-                    <button className="bg-yellow-500 text-gray-900 px-5 py-2 rounded-full font-semibold hover:bg-yellow-400 transition">
-                      View Details →
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-semibold bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">
-                  {art.category}
-                </span>
-                <span className="text-sm text-gray-500">
-                  ❤️ {art.likes || 0}
-                </span>
-              </div>
-
-              <h3 className="text-lg font-bold text-gray-900 mb-1">
-                {art.title}
-              </h3>
-
-              <p className="text-sm text-gray-600 mb-3">
-                Artist: {art.userName || "Unknown"}
-              </p>
-
-              {art.price && (
-                <p className="text-lg font-bold text-yellow-600">
-                  ৳ {art.price}
-                </p>
-              )}
-            </div>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Featured Artworks
+            </h2>
+            <div className="w-24 h-1 bg-yellow-500 mx-auto mb-4 rounded-full"></div>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Handpicked artworks from our most talented creators around the world
+            </p>
           </div>
-        ))}
-      </div>
-    )}
 
-    {/* View All Button */}
-    <div className="text-center mt-16">
-      <Link to="/explore">
-        <button className="bg-gray-900 text-white px-10 py-4 rounded-full hover:bg-gray-800 transition-all transform hover:scale-105 font-semibold">
-          View All Artworks
-        </button>
-      </Link>
-    </div>
-  </div>
-</section>
+          {featuredArtworks.length === 0 ? (
+            <p className="text-center text-gray-500 py-12">
+              No featured artworks available at the moment.
+            </p>
+          ) : (
+            <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+              {featuredArtworks.map((art) => (
+                <div
+                  key={art._id}
+                  className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500"
+                >
+                  <div className="relative h-72 overflow-hidden">
+                    <img
+                      src={art.image}
+                      alt={art.title}
+                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                    />
 
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-500 flex items-end">
+                      <div className="p-6 text-white opacity-0 group-hover:opacity-100 translate-y-6 group-hover:translate-y-0 transition-all duration-500">
+                        <h3 className="text-xl font-bold mb-1">
+                          {art.title}
+                        </h3>
+                        <p className="text-sm opacity-90 mb-4">
+                          by {art.userName || "Unknown Artist"}
+                        </p>
 
-      {/* Categories Section */}
+                        <Link to={`/artwork/${art._id}`}>
+                          <button className="bg-yellow-500 text-gray-900 px-5 py-2 rounded-full font-semibold hover:bg-yellow-400 transition">
+                            View Details →
+                          </button>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xs font-semibold bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">
+                        {art.category}
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        ❤️ {art.likes || 0}
+                      </span>
+                    </div>
+
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">
+                      {art.title}
+                    </h3>
+
+                    <p className="text-sm text-gray-600 mb-3">
+                      Artist: {art.userName || "Unknown"}
+                    </p>
+
+                    {art.price && (
+                      <p className="text-lg font-bold text-yellow-600">
+                        ৳ {art.price}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="text-center mt-16">
+            <Link to="/explore">
+              <button className="bg-gray-900 text-white px-10 py-4 rounded-full hover:bg-gray-800 transition-all transform hover:scale-105 font-semibold">
+                View All Artworks
+              </button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="py-20 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold mb-4 text-center text-gray-800">
@@ -326,7 +312,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Top Artists Section */}
       <section className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold mb-4 text-center text-gray-800">
@@ -362,7 +347,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
       <section className="py-20 px-6 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold mb-4 text-center">
@@ -373,7 +357,7 @@ const Home = () => {
           </p>
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((test, idx) => (
-              <div 
+              <div
                 key={idx}
                 className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl hover:bg-white/20 transition-all transform hover:-translate-y-2"
               >
@@ -396,7 +380,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Blog/Articles Section */}
       <section className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold mb-4 text-center text-gray-800">
@@ -407,12 +390,12 @@ const Home = () => {
           </p>
           <div className="grid md:grid-cols-3 gap-8">
             {blogPosts.map((post, idx) => (
-              <div 
+              <div
                 key={idx}
                 className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all transform hover:-translate-y-2 group"
               >
                 <div className="relative overflow-hidden h-48">
-                  <img 
+                  <img
                     src={post.image}
                     alt={post.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -433,7 +416,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Newsletter Section */}
       <section className="py-20 px-6 bg-gradient-to-r from-yellow-400 to-orange-500">
         <div className="max-w-4xl mx-auto text-center text-white">
           <h2 className="text-4xl font-bold mb-4">
@@ -443,7 +425,7 @@ const Home = () => {
             Subscribe to our newsletter for weekly inspiration and exclusive content
           </p>
           <div className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
-            <input 
+            <input
               type="email"
               placeholder="Enter your email"
               className="flex-1 px-6 py-4 rounded-full text-gray-800 focus:outline-none focus:ring-4 focus:ring-white/50"
@@ -458,7 +440,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-20 px-6 bg-gray-900 text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
@@ -475,7 +456,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* FAQ Section */}
       <section className="py-20 px-6 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl font-bold mb-4 text-center text-gray-800">
@@ -491,7 +471,7 @@ const Home = () => {
               { q: "Can I sell my artwork on the platform?", a: "Currently, we focus on showcasing art. However, you can connect with potential buyers through your profile." },
               { q: "How do I gain more visibility?", a: "Engage with the community, upload regularly, use relevant categories, and share your work on social media." },
             ].map((faq, idx) => (
-              <details 
+              <details
                 key={idx}
                 className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all group"
               >

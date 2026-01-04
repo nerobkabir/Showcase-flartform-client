@@ -1,8 +1,4 @@
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-} from "react-icons/fa";
+import {FaFacebookF, FaInstagram, FaLinkedinIn,} from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
@@ -10,7 +6,6 @@ const Footer = () => {
     <footer className="bg-gray-900 text-white py-10">
       <div className="max-w-7xl mx-auto px-6 grid gap-8 md:grid-cols-3 items-center">
 
-        {/* ---------- Brand Info ---------- */}
         <div className="text-center md:text-left">
           <h2 className="text-2xl font-bold text-yellow-400">Artify</h2>
           <p className="text-sm text-gray-400 mt-2">
@@ -21,7 +16,6 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* ---------- Contact Info ---------- */}
         <div className="text-center">
           <h3 className="text-yellow-400 font-semibold mb-3">
             Contact Us
@@ -48,7 +42,6 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* ---------- Social Links ---------- */}
         <div className="flex justify-center md:justify-end gap-5">
           <SocialIcon
             href="https://www.facebook.com/"
@@ -83,7 +76,6 @@ const Footer = () => {
   );
 };
 
-/* ---------- Reusable Social Icon ---------- */
 const SocialIcon = ({ href, children, label }) => (
   <a
     href={href}

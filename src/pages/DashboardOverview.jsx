@@ -22,7 +22,6 @@ const DashboardOverview = () => {
 
     console.log("Fetching dashboard data for:", user.email);
 
-    // Fetch data from existing endpoints
     Promise.all([
       fetch(`https://showcase-server.vercel.app/my-artworks?email=${user.email}`).then(res => res.json()),
       fetch(`https://showcase-server.vercel.app/favorites?email=${user.email}`).then(res => res.json()),
@@ -31,7 +30,6 @@ const DashboardOverview = () => {
         console.log("Artworks:", artworks);
         console.log("Favorites:", favorites);
 
-        // Calculate stats
         const totalLikes = artworks.reduce((sum, art) => sum + (art.likes || 0), 0);
         const publicArtworks = artworks.filter(art => art.visibility === 'Public').length;
         
@@ -43,7 +41,6 @@ const DashboardOverview = () => {
           privateArtworks: artworks.length - publicArtworks
         });
 
-        // Process monthly data
         const monthlyMap = {};
         artworks.forEach(art => {
           if (art.createdAt) {
@@ -58,7 +55,6 @@ const DashboardOverview = () => {
         }));
         setMonthlyData(monthlyChart);
 
-        // Process category data
         const categoryMap = {};
         artworks.forEach(art => {
           if (art.category) {
@@ -72,7 +68,6 @@ const DashboardOverview = () => {
         }));
         setCategoryData(categoryChart);
 
-        // Get recent artworks
         const sorted = [...artworks].sort((a, b) => {
           const dateA = new Date(a.createdAt || 0);
           const dateB = new Date(b.createdAt || 0);
@@ -102,7 +97,6 @@ const DashboardOverview = () => {
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-800">Dashboard Overview</h1>
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-xl shadow-lg">
           <div className="flex items-center justify-between">
@@ -145,9 +139,7 @@ const DashboardOverview = () => {
         </div>
       </div>
 
-      {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Bar Chart - Monthly Uploads */}
         <div className="bg-white p-6 rounded-xl shadow-md">
           <h2 className="text-xl font-semibold mb-4 text-gray-800">Monthly Upload Trend</h2>
           {monthlyData.length > 0 ? (
@@ -171,7 +163,6 @@ const DashboardOverview = () => {
           )}
         </div>
 
-        {/* Pie Chart - Category Distribution */}
         <div className="bg-white p-6 rounded-xl shadow-md">
           <h2 className="text-xl font-semibold mb-4 text-gray-800">Category Distribution</h2>
           {categoryData.length > 0 ? (
@@ -205,7 +196,6 @@ const DashboardOverview = () => {
         </div>
       </div>
 
-      {/* Recent Artworks Table */}
       <div className="bg-white rounded-xl shadow-md overflow-hidden">
         <div className="p-6 border-b">
           <h2 className="text-xl font-semibold text-gray-800">Recent Artworks</h2>

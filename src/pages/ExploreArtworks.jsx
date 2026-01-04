@@ -7,15 +7,14 @@ const ExploreArtworks = () => {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [rating, setRating] = useState("");
-  const [dateSort, setDateSort] = useState(""); // newest, oldest
-  const [likesSort, setLikesSort] = useState(""); // most, least
+  const [dateSort, setDateSort] = useState(""); 
+  const [likesSort, setLikesSort] = useState(""); 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [categories, setCategories] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const ITEMS_PER_PAGE = 12;
 
-  // Debounced search
   const debouncedSearch = useCallback(
     debounce((value) => {
       setSearch(value);
@@ -24,7 +23,6 @@ const ExploreArtworks = () => {
     []
   );
 
-  // Fetch artworks with all filters & pagination
   const fetchArtworks = useCallback(async (page = 1) => {
     setLoading(true);
     try {
@@ -39,9 +37,8 @@ const ExploreArtworks = () => {
       const res = await fetch(url);
       const data = await res.json();
       
-      // Backend doesn't support pagination yet, so simulate it
       setArtworks(data);
-      setTotalCount(data.length); // Use full count for pagination UI
+      setTotalCount(data.length); 
       setTotalPages(Math.ceil(data.length / ITEMS_PER_PAGE));
     } catch (err) {
       console.error("Error fetching artworks:", err);
@@ -50,7 +47,6 @@ const ExploreArtworks = () => {
     }
   }, [search, category, rating, dateSort, likesSort]);
 
-  // Fetch categories
   useEffect(() => {
     fetch("https://showcase-server.vercel.app/artworks")
       .then((res) => res.json())
@@ -61,17 +57,14 @@ const ExploreArtworks = () => {
       .catch(console.error);
   }, []);
 
-  // Fetch artworks when filters change
   useEffect(() => {
     fetchArtworks(1);
   }, [fetchArtworks]);
 
-  // Reset to page 1 when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [search, category, rating, dateSort, likesSort]);
 
-  // Reset filters
   const resetFilters = () => {
     setSearch("");
     setCategory("");
@@ -81,7 +74,6 @@ const ExploreArtworks = () => {
     setCurrentPage(1);
   };
 
-  // Skeleton Loader
   const SkeletonCard = () => (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden animate-pulse h-[420px]">
       <div className="w-full h-56 bg-gradient-to-r from-gray-200 to-gray-300"></div>
@@ -97,7 +89,6 @@ const ExploreArtworks = () => {
     </div>
   );
 
-  // Pagination Component
   const Pagination = () => (
     <div className="flex items-center justify-between mt-12 mb-16">
       <div className="text-sm text-gray-600 font-medium">
@@ -150,7 +141,6 @@ const ExploreArtworks = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-gray-100">
-      {/* Hero Section */}
       <div className="bg-gradient-to-r from-slate-900 via-gray-900 to-slate-900 text-white py-20 px-6">
         <div className="max-w-7xl mx-auto text-center">
           <div className="inline-block mb-6 p-2 bg-gradient-to-br from-yellow-400/20 to-yellow-500/20 rounded-2xl backdrop-blur-sm">
@@ -170,10 +160,8 @@ const ExploreArtworks = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 -mt-12 relative z-10">
-        {/* Advanced Filters */}
         <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl p-8 mb-12 border border-white/50">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            {/* Search */}
             <div className="relative">
               <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -188,7 +176,6 @@ const ExploreArtworks = () => {
               />
             </div>
 
-            {/* Category Filter */}
             <div className="relative">
               <select
                 value={category}
@@ -210,7 +197,6 @@ const ExploreArtworks = () => {
               </div>
             </div>
 
-            {/* Rating Filter */}
             <div className="relative">
               <select
                 value={rating}
@@ -231,7 +217,6 @@ const ExploreArtworks = () => {
               </div>
             </div>
 
-            {/* Sorting */}
             <div className="grid grid-cols-2 gap-2">
               <select
                 value={dateSort}
@@ -262,7 +247,6 @@ const ExploreArtworks = () => {
             </div>
           </div>
 
-          {/* Results & Reset */}
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-between pt-6 border-t border-slate-100">
             {!loading && (
               <p className="text-sm text-slate-600 font-semibold">
@@ -289,7 +273,6 @@ const ExploreArtworks = () => {
           </div>
         </div>
 
-        {/* Artworks Grid */}
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 pb-20">
           {loading ? (
             Array(ITEMS_PER_PAGE).fill().map((_, i) => <SkeletonCard key={i} />)
@@ -321,7 +304,6 @@ const ExploreArtworks = () => {
                 to={`/artwork/${art._id}`}
                 className="group bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl hover:shadow-3xl overflow-hidden hover:-translate-y-2 transition-all duration-500 flex flex-col h-[440px] border border-white/50 hover:border-yellow-200/50"
               >
-                {/* Image */}
                 <div className="relative h-64 overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200">
                   <img
                     src={art.image}
@@ -330,7 +312,6 @@ const ExploreArtworks = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
                   
-                  {/* Category Badge */}
                   <div className="absolute top-4 left-4 z-10">
                     <span className="px-4 py-2 bg-white/95 backdrop-blur-md text-slate-800 text-xs font-bold rounded-2xl shadow-2xl border border-white/50">
                       {art.category}
@@ -338,7 +319,6 @@ const ExploreArtworks = () => {
                   </div>
                 </div>
 
-                {/* Content */}
                 <div className="p-7 flex flex-col flex-1">
                   <h3 className="text-xl font-black text-slate-900 mb-3 line-clamp-2 group-hover:text-yellow-600 transition-colors duration-300 leading-tight">
                     {art.title}
@@ -351,7 +331,6 @@ const ExploreArtworks = () => {
                     {art.userName || "Unknown Artist"}
                   </p>
 
-                  {/* Stats */}
                   <div className="flex items-center gap-4 mb-6 text-sm">
                     <div className="flex items-center gap-1.5 text-rose-500 font-bold">
                       <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -369,7 +348,6 @@ const ExploreArtworks = () => {
                     )}
                   </div>
 
-                  {/* CTA Button */}
                   <div className="mt-auto">
                     <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 group-hover:from-yellow-500 group-hover:to-yellow-600 text-slate-900 font-black py-4 px-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center gap-3 text-sm uppercase tracking-wide">
                       <span>View Details</span>
@@ -383,7 +361,6 @@ const ExploreArtworks = () => {
             ))
           )}
 
-          {/* Pagination */}
           {totalPages > 1 && <Pagination />}
         </div>
       </div>
@@ -391,7 +368,6 @@ const ExploreArtworks = () => {
   );
 };
 
-// Debounce utility
 function debounce(func, wait) {
   let timeout;
   return function executedFunction(...args) {

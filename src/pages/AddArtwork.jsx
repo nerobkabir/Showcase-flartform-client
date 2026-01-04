@@ -60,7 +60,6 @@ const AddArtwork = () => {
             <option value="Private">Private</option>
           </select>
 
-          {/* User Info */}
           <input type="text" value={user?.displayName || ""} readOnly className="w-full p-2 border rounded-md bg-gray-100" />
           <input type="email" value={user?.email || ""} readOnly className="w-full p-2 border rounded-md bg-gray-100" />
 

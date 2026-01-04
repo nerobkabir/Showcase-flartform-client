@@ -12,7 +12,6 @@ const ArtworkDetails = () => {
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({ rating: 5, comment: "" });
   
-  // Demo user - replace with real auth later
   const user = { email: "demo@example.com", displayName: "Demo User" };
 
   useEffect(() => {
@@ -21,13 +20,11 @@ const ArtworkDetails = () => {
       .then(data => {
         setArtwork(data);
 
-        // Fetch artist info
         fetch(`https://showcase-server.vercel.app/artist/${data.userEmail}/artworks`)
           .then(res => res.json())
           .then(info => setArtistInfo(info))
           .catch(err => console.log(err));
 
-        // Fetch related artworks (same category)
         fetch(`https://showcase-server.vercel.app/artworks?category=${data.category}`)
           .then(res => res.json())
           .then(related => {
@@ -179,7 +176,6 @@ const ArtworkDetails = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 py-12 px-4">
       <div className="max-w-7xl mx-auto">
-        {/* Breadcrumb */}
         <div className="mb-6 flex items-center gap-2 text-sm text-gray-600">
           <a href="/" className="hover:text-yellow-600 transition-colors">Home</a>
           <span>/</span>
@@ -189,7 +185,6 @@ const ArtworkDetails = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 mb-12">
-          {/* Left: Images Section */}
           <div className="space-y-4">
             <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
               <img
@@ -240,9 +235,7 @@ const ArtworkDetails = () => {
             </div>
           </div>
 
-          {/* Right: Details Section */}
           <div className="space-y-6">
-            {/* Overview Card */}
             <div className="bg-white rounded-2xl shadow-xl p-8">
               <div className="flex items-start justify-between mb-4">
                 <div>
@@ -288,7 +281,6 @@ const ArtworkDetails = () => {
               </div>
             </div>
 
-            {/* Key Information Card */}
             <div className="bg-white rounded-2xl shadow-xl p-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
                 <svg className="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -322,7 +314,6 @@ const ArtworkDetails = () => {
               </div>
             </div>
 
-            {/* Artist Info Card */}
             <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl p-8 text-white">
               <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
                 <svg className="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -347,7 +338,6 @@ const ArtworkDetails = () => {
           </div>
         </div>
 
-        {/* Reviews Section */}
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-8 flex items-center gap-3">
             <svg className="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -417,7 +407,6 @@ const ArtworkDetails = () => {
           )}
         </div>
 
-        {/* Related Artworks Section */}
         {relatedArtworks.length > 0 && (
           <div className="bg-white rounded-2xl shadow-xl p-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-8 flex items-center gap-3">
