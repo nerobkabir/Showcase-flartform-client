@@ -10,6 +10,15 @@ import ExploreArtworks from "../pages/ExploreArtworks";
 import ArtworkDetails from "../pages/ArtworkDetails";
 import MyGallery from "../pages/MyGallery";
 import MyFavorites from "../pages/MyFavorites";
+import DashboardLayout from "../pages/DashboardLayout";
+import DashboardOverview from "../pages/DashboardOverview";
+import ProfilePage from "../pages/ProfilePage";
+import About from "../pages/About";
+import Contact from "../pages/Contact";
+import Privacy from "../pages/Privacy";
+
+
+
 
 export const router = createBrowserRouter([
   {
@@ -29,27 +38,23 @@ export const router = createBrowserRouter([
       {
         path: "/explore",
         element: <ExploreArtworks />
-      }, {
+      },
+      {
+        path: "/about",
+        element: <About />
+      },
+      {
+        path: "/contact",
+        element: <Contact />
+      },
+      {
+        path: "/privacy",
+        element: <Privacy />
+      },
+      {
         path: "/artwork/:id",
-        element: <PrivateRoute>
-          <ArtworkDetails />
-        </PrivateRoute>
+        element: <ArtworkDetails />
       },
-      {
-        path: "/gallery",
-        element: <PrivateRoute>
-          <MyGallery />
-        </PrivateRoute>
-      },
-      {
-        path: "/favorites",
-        element: (
-          <PrivateRoute>
-            <MyFavorites />
-          </PrivateRoute>
-        ),
-      },
-
       {
         path: "/login",
         element: <Login />
@@ -58,7 +63,34 @@ export const router = createBrowserRouter([
         path: "/register",
         element: <Register />
       },
+    ],
+  },
 
+  // Dashboard Routes
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <DashboardOverview />
+      },
+      {
+        path: "gallery",
+        element: <MyGallery />
+      },
+      {
+        path: "favorites",
+        element: <MyFavorites />
+      },
+      {
+        path: "profile",
+        element: <ProfilePage />
+      },
     ],
   },
 

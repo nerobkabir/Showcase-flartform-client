@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 import { AuthContext } from "./AuthProvider";
 
@@ -12,28 +11,47 @@ const Register = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    const name = e.target.name.value;
-    const email = e.target.email.value;
-    const photo = e.target.photo.value;
-    const password = e.target.password.value;
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const photo = form.photo.value;
+    const password = form.password.value;
 
-    // Password validation
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-    if (!passwordRegex.test(password)) {
-      setError("Password must contain uppercase, lowercase, and at least 6 characters.");
+    setError("");
+
+    // Strong password validation
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
+    if (!/[A-Z]/.test(password)) {
+      setError("Password must contain at least one uppercase letter.");
+      return;
+    }
+    if (!/[a-z]/.test(password)) {
+      setError("Password must contain at least one lowercase letter.");
       return;
     }
 
     createUser(email, password)
-      .then(() => {
-        updateUserProfile(name, photo)
-          .then(() => {
-            Swal.fire("Success!", "Account created successfully!", "success");
-            navigate("/");
-          })
-          .catch(() => toast.error("Profile update failed"));
+      .then((result) => {
+        return updateUserProfile(name, photo).then(() => result);
       })
-      .catch(() => setError("Registration failed! Try again."));
+      .then(() => {
+        Swal.fire({
+          icon: "success",
+          title: "Welcome to Artify! 🎉",
+          text: "Account created successfully!",
+          confirmButtonColor: "#f59e0b",
+          timer: 2500,
+          showConfirmButton: false,
+        });
+        navigate("/");
+      })
+      .catch((err) => {
+        setError("Registration failed. Email might already be in use.");
+        toast.error("Registration failed!");
+      });
   };
 
   const handleGoogleSignup = () => {
@@ -46,34 +64,87 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <Toaster />
-      <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-bold mb-4 text-center">Register to Artify</h2>
-        <form onSubmit={handleRegister}>
-          <input type="text" name="name" placeholder="Full Name" required className="w-full p-2 mb-3 border rounded-md" />
-          <input type="email" name="email" placeholder="Email" required className="w-full p-2 mb-3 border rounded-md" />
-          <input type="text" name="photo" placeholder="Photo URL" required className="w-full p-2 mb-3 border rounded-md" />
-          <input type="password" name="password" placeholder="Password" required className="w-full p-2 mb-4 border rounded-md" />
-          {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
-          <button type="submit" className="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-md">
-            Register
-          </button>
-        </form>
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-100 flex items-center justify-center px-4 py-12">
+      <Toaster position="top-right" />
 
-        <button
-          onClick={handleGoogleSignup}
-          className="w-full mt-3 border border-gray-300 py-2 rounded-md hover:bg-gray-100"
-        >
-          Sign up with Google
-        </button>
+      <div className="w-full max-w-md">
+        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white/50">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-black text-gray-900 mb-2">Join Artify</h1>
+            <p className="text-gray-600">Create your account and start sharing art</p>
+          </div>
 
-        <p className="mt-4 text-sm text-center">
-          Already have an account?{" "}
-          <Link to="/login" className="text-yellow-500 hover:underline">
-            Login
-          </Link>
-        </p>
+          <form onSubmit={handleRegister} className="space-y-5">
+            <div>
+              <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                required
+                className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:border-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-500/20 transition-all text-gray-800 placeholder-gray-500 bg-white/70"
+              />
+            </div>
+
+            <div>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email address"
+                required
+                className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:border-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-500/20 transition-all text-gray-800 placeholder-gray-500 bg-white/70"
+              />
+            </div>
+
+            <div>
+              <input
+                type="text"
+                name="photo"
+                placeholder="Photo URL (optional)"
+                className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:border-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-500/20 transition-all text-gray-800 placeholder-gray-500 bg-white/70"
+              />
+            </div>
+
+            <div>
+              <input
+                type="password"
+                name="password"
+                placeholder="Password (min 6 chars, upper & lower)"
+                required
+                className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:border-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-500/20 transition-all text-gray-800 placeholder-gray-500 bg-white/70"
+              />
+            </div>
+
+            {error && (
+              <div className="bg-red-50 text-red-700 px-4 py-3 rounded-xl text-sm font-medium">
+                {error}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+            >
+              Create Account
+            </button>
+          </form>
+
+          <div className="mt-6">
+            <button
+              onClick={handleGoogleSignup}
+              className="w-full flex items-center justify-center gap-3 bg-white border-2 border-gray-300 hover:border-gray-400 py-4 rounded-xl font-medium text-gray-700 hover:bg-gray-50 transition-all shadow-md hover:shadow-lg"
+            >
+              <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
+              Sign up with Google
+            </button>
+          </div>
+
+          <p className="mt-8 text-center text-gray-600">
+            Already have an account?{" "}
+            <Link to="/login" className="font-bold text-yellow-600 hover:text-yellow-700 hover:underline">
+              Login here
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
