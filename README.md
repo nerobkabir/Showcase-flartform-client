@@ -5,7 +5,7 @@ A modern web platform where artists can upload and display their creative artwor
 
 ## 🔗 Live Links
 
-- **Client:** [https://chimerical-crisp-783324.netlify.app](https://chimerical-crisp-783324.netlify.app)
+- **Client:** [https://bejewelled-panda-60b4b5.netlify.app](https://bejewelled-panda-60b4b5.netlify.app)
 - **Server:** [https://showcase-server.vercel.app](https://showcase-server.vercel.app)
 
 ---
